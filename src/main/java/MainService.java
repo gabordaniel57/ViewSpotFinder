@@ -24,10 +24,7 @@ public final class MainService {
     ObjectMapper objectMapper = new ObjectMapper();
 
 
-
-
-
-    void loadData(String jsonSrc ) throws IOException, ParseException {
+    void loadData(String jsonSrc) throws IOException, ParseException {
         JSONParser parser = new JSONParser();
 
         Object obj = parser.parse(new FileReader(jsonSrc));
@@ -59,14 +56,18 @@ public final class MainService {
     }
 
 
-
-
     void resultGetter(int n) {
 
         System.out.println("[");
         int soutCounter = 0;
 
-        for (Value iteratorForValueList : valueList) {
+//        for (Value iteratorForValueList : valueList) {
+//            boolean skip = false;
+//            double elementValue = Double.parseDouble(iteratorForValueList.getValue());
+//            if (soutCounter == n) break;
+
+        for (int h = 0; h < n; h++) {
+            Value iteratorForValueList = valueList.get(h);
             boolean skip = false;
             double elementValue = Double.parseDouble(iteratorForValueList.getValue());
             if (soutCounter == n) break;
@@ -104,7 +105,7 @@ public final class MainService {
 
                 double iteratorForValueListMax = 0;
                 for (Value v : this.neighboursForNode) {
-                System.out.println("neighbour" + v.getElement_id());
+
                     double vValue = Double.parseDouble(v.getValue());
                     if (vValue > iteratorForValueListMax) {
                         iteratorForValueListMax = vValue;

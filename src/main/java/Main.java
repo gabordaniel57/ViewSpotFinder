@@ -23,7 +23,7 @@ public class Main {
 //        int n = Integer.parseInt(args[1]);
 
 
-        int n = 8;
+        int n = 20;
         String jsonSoruce = "D:\\.PERSONAL PROJECTS\\TEST ARRK\\ViewSpotFinder\\src\\main\\JSON\\mesh_x_sin_cos_10000.json";
 
 
