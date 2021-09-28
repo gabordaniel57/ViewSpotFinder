@@ -20,6 +20,8 @@ public final class MainService {
     List<Value> neighboursForNode = new ArrayList<Value>();
     List<Value> alreadyDisplayed = new ArrayList<Value>();
 
+    List<Value> findedViewSpots = new ArrayList<Value>();
+
 
     ObjectMapper objectMapper = new ObjectMapper();
 
@@ -61,13 +63,7 @@ public final class MainService {
         System.out.println("[");
         int soutCounter = 0;
 
-//        for (Value iteratorForValueList : valueList) {
-//            boolean skip = false;
-//            double elementValue = Double.parseDouble(iteratorForValueList.getValue());
-//            if (soutCounter == n) break;
-
-        for (int h = 0; h < n; h++) {
-            Value iteratorForValueList = valueList.get(h);
+        for (Value iteratorForValueList : valueList) {
             boolean skip = false;
             double elementValue = Double.parseDouble(iteratorForValueList.getValue());
             if (soutCounter == n) break;
@@ -96,36 +92,53 @@ public final class MainService {
                             double elementToCompareValueD = Double.parseDouble(elementToCompareValue.getValue());
                             if (elementValue < elementToCompareValueD) {
                                 skip = true;
-                            } else {
+                            } else if (elementValue >= elementToCompareValueD) {
+                                System.out.println(elementValue + ">=" + elementToCompareValueD);
                                 this.neighboursForNode.add(elementToCompareValue);
                             }
                         }
                     }
                 }
 
-                double iteratorForValueListMax = 0;
-                for (Value v : this.neighboursForNode) {
 
-                    double vValue = Double.parseDouble(v.getValue());
-                    if (vValue > iteratorForValueListMax) {
-                        iteratorForValueListMax = vValue;
-                    }
-                }
-                if (elementValue > iteratorForValueListMax && !alreadyDisplayed.contains(iteratorForValueList)) {
-
-                    System.out.println(
-                            "{element_id: " + iteratorForValueList.getElement_id() + ", value: " +
-                                    iteratorForValueList.getValue() + "},");
-
-                    this.alreadyDisplayed.add(iteratorForValueList);
-                    this.neighboursForNode.removeAll(this.neighboursForNode);
-                    soutCounter++;
-                }
             }
 
 
+            if (this.neighboursForNode.size() > 0) {
+                double iteratorForValueListMax = 0;
+                for (Value v : this.neighboursForNode) {
+                    double vValue = Double.parseDouble(v.getValue());
+                    if (vValue >= iteratorForValueListMax) {
+                        iteratorForValueListMax = vValue;
+                    }
+                }
+                if (elementValue >= iteratorForValueListMax && !alreadyDisplayed.contains(iteratorForValueList)) {
+
+                    findedViewSpots.add(iteratorForValueList);
+                    this.alreadyDisplayed.add(iteratorForValueList);
+                    this.neighboursForNode.removeAll(this.neighboursForNode);
+
+                    soutCounter++;
+                }
+            }
         }
+
+        this.displayViewPoints(n);
         System.out.println("]");
+
+    }
+
+    void displayViewPoints(int n) {
+        this.findedViewSpots.sort(Comparator.comparing(Value::getValue).reversed());
+        int counter = 0;
+        if (counter < n) {
+            for (Value v : findedViewSpots) {
+                System.out.println(
+                        "{element_id: " + v.getElement_id() + ", value: " +
+                                v.getValue() + "},");
+                counter++;
+            }
+        }
 
     }
 
