@@ -18,13 +18,10 @@ public final class MainService {
     List<Value> valueList = new ArrayList<Value>();
 
     List<Value> neighboursForNode = new ArrayList<Value>();
-    List<Value> alreadyDisplayed = new ArrayList<Value>();
 
     List<Value> findedViewSpots = new ArrayList<Value>();
 
-
     ObjectMapper objectMapper = new ObjectMapper();
-
 
     void loadData(String jsonSrc) throws IOException, ParseException {
         JSONParser parser = new JSONParser();
@@ -53,10 +50,6 @@ public final class MainService {
         }
     }
 
-    void orderdValues() {
-        this.valueList.sort(Comparator.comparing(Value::getValue).reversed());
-    }
-
 
     void resultGetter(int n) {
 
@@ -66,7 +59,7 @@ public final class MainService {
         for (Value iteratorForValueList : valueList) {
             boolean skip = false;
             double elementValue = Double.parseDouble(iteratorForValueList.getValue());
-            if (soutCounter == n) break;
+//            if (soutCounter == n) break;
 
 
             Element element = elementList.stream()
@@ -75,7 +68,7 @@ public final class MainService {
                     .orElse(null);
 
             for (int i = 0; i < 3; i++) { // iterate on element nodes
-                if (soutCounter == n) break;
+//                if (soutCounter == n) break;
                 if (skip) continue;
                 for (Element elementToCompare : elementList) {
 
@@ -90,17 +83,16 @@ public final class MainService {
                                     .orElse(null);
 
                             double elementToCompareValueD = Double.parseDouble(elementToCompareValue.getValue());
-                            if (elementValue < elementToCompareValueD) {
-                                skip = true;
-                            } else if (elementValue >= elementToCompareValueD) {
-                                System.out.println(elementValue + ">=" + elementToCompareValueD);
+
+                            if (elementValue >= elementToCompareValueD) {
                                 this.neighboursForNode.add(elementToCompareValue);
+                            } else if (elementValue < elementToCompareValueD) {
+                                skip = true;
                             }
+//
                         }
                     }
                 }
-
-
             }
 
 
@@ -108,16 +100,14 @@ public final class MainService {
                 double iteratorForValueListMax = 0;
                 for (Value v : this.neighboursForNode) {
                     double vValue = Double.parseDouble(v.getValue());
+
                     if (vValue >= iteratorForValueListMax) {
                         iteratorForValueListMax = vValue;
                     }
                 }
-                if (elementValue >= iteratorForValueListMax && !alreadyDisplayed.contains(iteratorForValueList)) {
-
+                if (elementValue >= iteratorForValueListMax) {
                     findedViewSpots.add(iteratorForValueList);
-                    this.alreadyDisplayed.add(iteratorForValueList);
-                    this.neighboursForNode.removeAll(this.neighboursForNode);
-
+                    this.neighboursForNode = new ArrayList<Value>();
                     soutCounter++;
                 }
             }
@@ -131,17 +121,28 @@ public final class MainService {
     void displayViewPoints(int n) {
         this.findedViewSpots.sort(Comparator.comparing(Value::getValue).reversed());
         int counter = 0;
-        if (counter < n) {
-            for (Value v : findedViewSpots) {
-                System.out.println(
-                        "{element_id: " + v.getElement_id() + ", value: " +
-                                v.getValue() + "},");
-                counter++;
+
+        for (int i = 0; i < n; i++) {
+            if (i == findedViewSpots.size()){
+                break;
             }
+            Value v = findedViewSpots.get(i);
+            boolean skip = false;
+            if (i > 0) {
+                Value pV = findedViewSpots.get(i - 1);
+                if (Double.parseDouble(v.getValue()) == Double.parseDouble(pV.getValue())) {
+                    skip = true;
+                }
+            }
+            if (skip) continue;
+            System.out.println(
+                    "{ element_id: " + v.getElement_id() + ", value: " +
+                            v.getValue() + " },");
+            counter++;
+
+
         }
-
     }
-
 
     void printValueList() {
         for (Value v : valueList) {
