@@ -17,6 +17,7 @@ public final class MainService {
     List<Node> nodeList = new ArrayList<Node>();
     List<Value> valueList = new ArrayList<Value>();
 
+
     List<Value> neighboursForNode = new ArrayList<Value>();
 
     List<Value> findedViewSpots = new ArrayList<Value>();
@@ -113,13 +114,14 @@ public final class MainService {
             }
         }
 
-        this.displayViewPoints(n);
+       this.displayViewPoints(n);
         System.out.println("]");
 
     }
 
     void displayViewPoints(int n) {
-        this.findedViewSpots.sort(Comparator.comparing(Value::getValue).reversed());
+       this.findedViewSpots.sort(Comparator.comparing(Value::getValue).reversed());
+
         int counter = 0;
 
         for (int i = 0; i < n; i++) {
@@ -135,10 +137,18 @@ public final class MainService {
                 }
             }
             if (skip) continue;
-            System.out.println(
-                    "{ element_id: " + v.getElement_id() + ", value: " +
-                            v.getValue() + " },");
-            counter++;
+            if (i == n-1 || i == findedViewSpots.size()-1){
+                System.out.println(
+                        "{ element_id: " + v.getElement_id() + ", value: " +
+                                v.getValue() + " }");
+                counter++;
+            }else {
+                System.out.println(
+                        "{ element_id: " + v.getElement_id() + ", value: " +
+                                v.getValue() + " },");
+                counter++;
+            }
+
 
 
         }
