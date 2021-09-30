@@ -60,8 +60,6 @@ public final class MainService {
         for (Value iteratorForValueList : valueList) {
             boolean skip = false;
             double elementValue = Double.parseDouble(iteratorForValueList.getValue());
-//            if (soutCounter == n) break;
-
 
             Element element = elementList.stream()
                     .filter(e -> iteratorForValueList.getElement_id().equals(e.getId()))
@@ -69,7 +67,6 @@ public final class MainService {
                     .orElse(null);
 
             for (int i = 0; i < 3; i++) { // iterate on element nodes
-//                if (soutCounter == n) break;
                 if (skip) continue;
                 for (Element elementToCompare : elementList) {
 
@@ -148,9 +145,6 @@ public final class MainService {
                                 v.getValue() + " },");
                 counter++;
             }
-
-
-
         }
     }
 

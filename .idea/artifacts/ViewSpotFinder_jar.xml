@@ -1,8 +1,17 @@
 <component name="ArtifactManager">
-  <artifact type="jar" name="ViewSpotFinder:jar">
+  <artifact name="ViewSpotFinder:jar">
     <output-path>$PROJECT_DIR$/out/artifacts/ViewSpotFinder_jar</output-path>
-    <root id="archive" name="ViewSpotFinder.jar">
-      <element id="module-output" name="ViewSpotFinder" />
+    <root id="root">
+      <element id="archive" name="ViewSpotFinder.jar">
+        <element id="directory" name="META-INF">
+          <element id="file-copy" path="$PROJECT_DIR$/src/main/resources/META-INF/MANIFEST.MF" />
+        </element>
+        <element id="module-output" name="ViewSpotFinder" />
+      </element>
+      <element id="library" level="project" name="Maven: com.googlecode.json-simple:json-simple:1.1" />
+      <element id="library" level="project" name="Maven: com.fasterxml.jackson.core:jackson-core:2.9.9" />
+      <element id="library" level="project" name="Maven: com.fasterxml.jackson.core:jackson-databind:2.9.9.3" />
+      <element id="library" level="project" name="Maven: com.fasterxml.jackson.core:jackson-annotations:2.9.0" />
     </root>
   </artifact>
 </component>
