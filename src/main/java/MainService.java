@@ -87,12 +87,10 @@ public final class MainService {
                             } else if (elementValue < elementToCompareValueD) {
                                 skip = true;
                             }
-//
                         }
                     }
                 }
             }
-
 
             if (this.neighboursForNode.size() > 0) {
                 double iteratorForValueListMax = 0;
